@@ -1,0 +1,85 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "import", "react", "nextjs"],
+  "jsPlugins": [{ "name": "react-hooks-js", "specifier": "eslint-plugin-react-hooks" }],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "warn"
+  },
+  "options": {
+    "typeAware": true,
+    "typeCheck": true
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2024": true
+  },
+  "settings": {
+    "react": {
+      "version": "19.2.5"
+    },
+    "next": {
+      "rootDir": ["apps/v15", "apps/v16", "apps/canary"]
+    }
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "import/no-unassigned-import": ["error", { "allow": ["**/*.css"] }],
+    "typescript/no-unnecessary-boolean-literal-compare": "off",
+    "typescript/no-useless-default-assignment": "off",
+    // React Compiler checks
+    // Recommended rules (from LintRulePreset.Recommended)
+    "react-hooks-js/config": "error",
+    "react-hooks-js/error-boundaries": "error",
+    "react-hooks-js/gating": "error",
+    "react-hooks-js/globals": "error",
+    "react-hooks-js/immutability": "error",
+    "react-hooks-js/incompatible-library": "error",
+    "react-hooks-js/preserve-manual-memoization": "error",
+    "react-hooks-js/purity": "error",
+    "react-hooks-js/refs": "error",
+    "react-hooks-js/set-state-in-effect": "error",
+    "react-hooks-js/set-state-in-render": "error",
+    "react-hooks-js/static-components": "error",
+    "react-hooks-js/unsupported-syntax": "error",
+    "react-hooks-js/use-memo": "error",
+    // Recommended-latest rules (from LintRulePreset.RecommendedLatest)
+    "react-hooks-js/void-use-memo": "error",
+    // Off rules (LintRulePreset.Off) - not enabled by default
+    "react-hooks-js/capitalized-calls": "error",
+    "react-hooks-js/exhaustive-effect-dependencies": "error",
+    "react-hooks-js/fbt": "error",
+    "react-hooks-js/hooks": "error",
+    "react-hooks-js/invariant": "error",
+    "react-hooks-js/memo-dependencies": "error",
+    "react-hooks-js/memoized-effect-dependencies": "error",
+    "react-hooks-js/no-deriving-state-in-effects": "error",
+    "react-hooks-js/rule-suppression": "error",
+    "react-hooks-js/syntax": "error",
+    "react-hooks-js/todo": "error"
+  },
+  "ignorePatterns": [
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/.turbo/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/out/**"
+  ],
+  "overrides": [
+    {
+      "files": ["**/*.js", "**/*.jsx", "**/*.mjs", "**/*.cjs"],
+      "rules": {
+        "typescript/no-floating-promises": "off",
+        "typescript/no-misused-promises": "off",
+        "typescript/no-unsafe-assignment": "off",
+        "typescript/no-unsafe-call": "off",
+        "typescript/no-unsafe-member-access": "off",
+        "typescript/no-unsafe-return": "off",
+        "typescript/no-unsafe-argument": "off"
+      }
+    }
+  ]
+}

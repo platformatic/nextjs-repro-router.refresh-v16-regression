@@ -1,0 +1,46 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "semi": false,
+  "singleQuote": true,
+  "jsxSingleQuote": false,
+  "ignorePatterns": ["pnpm-lock.yaml", "pnpm-workspace.yaml"],
+  "sortImports": true,
+  "overrides": [
+    {
+      "files": ["apps/v15/app/**/*"],
+      "options": {
+        "sortTailwindcss": {
+          "stylesheet": "./apps/v15/app/globals.css",
+          "functions": ["clsx"]
+        }
+      }
+    },
+    {
+      "files": ["apps/v16/app/**/*"],
+      "options": {
+        "sortTailwindcss": {
+          "stylesheet": "./apps/v16/app/globals.css",
+          "functions": ["clsx"]
+        }
+      }
+    },
+    {
+      "files": ["apps/canary/app/**/*"],
+      "options": {
+        "sortTailwindcss": {
+          "stylesheet": "./apps/canary/app/globals.css",
+          "functions": ["clsx"]
+        }
+      }
+    },
+    {
+      "files": ["packages/ui/src/**/*"],
+      "options": {
+        "sortTailwindcss": {
+          "stylesheet": "./apps/v16/app/globals.css",
+          "functions": ["clsx"]
+        }
+      }
+    }
+  ]
+}

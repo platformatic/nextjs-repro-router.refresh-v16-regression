@@ -1,0 +1,10 @@
+{
+  "extends": "@tsconfig/next",
+  "include": ["src/*.tsx"],
+  "compilerOptions": {
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "types": ["react"]
+  }
+}
