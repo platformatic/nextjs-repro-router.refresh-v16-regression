@@ -5,12 +5,20 @@ import { cacheLife, cacheTag } from 'next/cache'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+let fetches = 0;
+
+setInterval(() => {
+  console.log("FETCHES", fetches);
+}, 1000);
+
 export async function generateStaticParams() {
   return await fetchStaticParams()
 }
 
 async function fetchCachedPost(slug: string) {
   'use cache'
+
+  fetches++
   cacheLife('max')
   const { data: post, tags } = await fetchPost(slug)
   cacheTag(...tags)
