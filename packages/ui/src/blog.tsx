@@ -613,7 +613,7 @@ export async function fetchPosts() {
 }
 export async function fetchPost(slug: string) {
   // Simulates data fetching
-  await sleep(300)
+  await sleep(1000)
   const post = getPost(slug)
   return { data: post, tags: post ? [`${tagPrefixes.slug}${post.slug}`] : [] }
 }

@@ -17,8 +17,13 @@ export async function generateStaticParams() {
 
 async function fetchCachedPost(slug: string) {
   'use cache'
+<<<<<<< Updated upstream
 
   fetches++
+||||||| Stash base
+=======
+
+>>>>>>> Stashed changes
   cacheLife('max')
   const { data: post, tags } = await fetchPost(slug)
   cacheTag(...tags)
