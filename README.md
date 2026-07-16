@@ -74,6 +74,14 @@ all use `<Link>` prefetching), and a controller at the **root route `/`** that
 triggers `revalidateTag` / `updateTag` and then broadcasts a
 `router.refresh()` over `BroadcastChannel` to every open blog tab.
 
+The v16 app also includes a production-style [Platformatic Watt][watt] setup.
+Watt runs 12 Next.js workers behind [`plt-gateway`][plt-gateway], with
+Valkey-backed [request deduplication][gateway-deduplication] enabled at the
+gateway. Deduplication coalesces concurrent equivalent requests before they
+reach the Next.js workers. This mitigates the server-side stampede, but does
+not change the browser behavior reproduced here: `router.refresh()` still
+eagerly issues the in-viewport prefetches.
+
 ## Reproducing the regression
 
 The three apps are deployed on Vercel so you don't need to run anything
@@ -154,6 +162,26 @@ Local runs don't have `x-vercel-cache`, since it's set by Vercel's edge.
 The prefetch request **counts** still reproduce the regression against
 `next start`; the `x-vercel-cache: REVALIDATED` bit only shows up on the
 deployed version.
+
+### Running v16 with Watt and request deduplication
+
+To run the v16 app through `plt-gateway`, first start the Valkey instance used
+by the gateway's distributed deduplication storage, then build and start the
+root Watt project:
+
+```sh
+docker compose up -d valkey
+pnpm --filter v16-regression exec wattpm build ../..
+pnpm --filter v16-regression exec wattpm start ../..
+```
+
+Open <http://localhost:3000/> for the controller and
+<http://localhost:3000/blog> for the reproduction. The root `watt.json` makes
+`apps/gateway` the entrypoint and runs `apps/v16` with 12 workers; the gateway
+configuration in `apps/gateway/watt.json` enables Valkey-backed
+deduplication. This setup demonstrates the mitigation available when
+equivalent prefetch requests arrive concurrently, not a fix for the eager
+client-side prefetching regression.
 
 ## The two v16 changes that compound
 
@@ -243,6 +271,9 @@ not the fact that every in-viewport link fans out.
 [sanity-live]: https://www.sanity.io/docs/sanity-live
 [next-sanity]: https://github.com/sanity-io/next-sanity
 [sanity-sync-tag-fn]: https://www.sanity.io/docs/changelog/7a491dd1-67e8-41e0-9a89-eb9704055dc6
+[watt]: https://docs.platformatic.dev/docs/overview/what-is-watt
+[plt-gateway]: https://docs.platformatic.dev/docs/reference/gateway/overview
+[gateway-deduplication]: https://docs.platformatic.dev/docs/reference/gateway/deduplication
 
 ## How `www.sanity.io` worked around this
 
