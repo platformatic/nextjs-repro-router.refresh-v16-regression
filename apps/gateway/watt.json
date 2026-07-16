@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.platformatic.dev/@platformatic/gateway/3.0.0.json",
+  "basePath": "/",
+  "server": {
+    "hostname": "127.0.0.1",
+    "port": 0,
+    "logger": {
+      "level": "warn"
+    }
+  },
+  "gateway": {
+    "applications": [
+      {
+        "id": "next",
+        "proxy": {
+          "prefix": "/",
+          "routes": ["/", "/*"]
+        }
+      }
+    ],
+    "deduplication": {
+      "enabled": true,
+      "storage": {
+        "adapter": "valkey",
+        "url": "redis://127.0.0.1:6379"
+      }
+    }
+  }
+}

@@ -4,16 +4,19 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --port 3000",
+    "dev": "next dev --port 3001",
     "build": "next build",
-    "start": "next start"
+    "start": "next start --port 3001"
   },
   "dependencies": {
+    "@platformatic/next": "^3.61.1",
     "@repo/ui": "workspace:*",
     "clsx": "catalog:",
+    "ioredis": "^5.11.1",
     "next": "16.2.4",
     "react": "catalog:",
-    "react-dom": "catalog:"
+    "react-dom": "catalog:",
+    "wattpm": "^3.61.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "catalog:",
